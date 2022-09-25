@@ -1,0 +1,44 @@
+<app-search></app-search>
+<app-category></app-category>
+<app-not-found
+  [visible]="!productsData || productsData.length <= 0"
+  resetLinkText="Search again"
+></app-not-found>
+<ul>
+  <li *ngFor="let data of productsData">
+    <a routerLink="/product/{{ data.id }}">
+      <img src="{{ data.img }}" alt="" />
+      <div class="content">
+        <div class="name">
+          <span *ngIf="data.name.length <= 20">{{ data.name }}</span>
+          <span *ngIf="data.name.length >= 21"
+            >{{ data.name.slice(0, 20) }}...</span
+          >
+        </div>
+        <span class="favorite">❤️</span>
+        <div class="star">
+          <star-rating
+            [value]="data.ratings"
+            [totalstars]="5"
+            checkedcolor="red"
+            uncheckedcolor="black"
+            size="24px"
+            [readonly]="true"
+          ></star-rating>
+        </div>
+        <div class="product-item-footer">
+          <div class="tags">
+            <span>{{ data.category }}</span>
+          </div>
+
+          <div class="seller">
+            <span>{{ data.seller }}</span>
+          </div>
+        </div>
+        <div class="price">
+          {{ data.price | currency: "EUR":true:"2.2-2" }}
+        </div>
+      </div>
+    </a>
+  </li>
+</ul>
